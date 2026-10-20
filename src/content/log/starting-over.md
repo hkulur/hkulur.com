@@ -9,9 +9,9 @@ In 2021 I put up a single page with my name, a line saying I was a frontend engi
 
 This time the site has a job. It keeps a record of what I ship, with the help of agents: a project, an essay, a fix, a photo from a trip.[^1] Small counts. Unfinished doesn't.
 
-## Why a day counter
+## Why the numbers
 
-Dates tell you when something happened. A day number tells you how long I've kept going. Day 001 is today. If you see Day 400 here next year, the habit stuck.
+Every entry gets a number. This one is No. 001. I'm not promising one a day, only that I'll keep shipping regularly. The number is a plain count of how many things I've put out. If you see No. 100 here next year, the habit stuck.
 
 > Ship something small, regularly, with care.
 

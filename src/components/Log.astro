@@ -1,5 +1,5 @@
 ---
-import { dayLabel, formatDate, KIND_LABELS, type Entry } from '../lib/site';
+import { formatDate, KIND_LABELS, numberLabel, type Entry } from '../lib/site';
 
 interface Props {
   entries: Entry[];
@@ -12,10 +12,10 @@ const { entries } = Astro.props;
   <p class="empty">Nothing here yet.</p>
 ) : (
   <ol class="log">
-    {entries.map(({ id, data }) => (
+    {entries.map(({ id, data, number }) => (
       <li class="entry row">
         <div class="rail mono">
-          <b>{dayLabel(data.date)}</b>
+          <b>{numberLabel(number)}</b>
           <time datetime={data.date.toISOString().slice(0, 10)}>{formatDate(data.date)}</time>
         </div>
         <div class="main">

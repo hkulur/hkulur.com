@@ -25,7 +25,7 @@ draft: false         # optional
 ---
 ```
 
-The day number (Day 001 = 2026-10-20, `START` in `src/lib/site.ts`) is computed from `date`. Never hard-code it.
+Entries are numbered No. 001, No. 002, … in date order across the whole log (`getEntries` in `src/lib/site.ts`). The number is computed, so never hard-code it. Backdating an entry renumbers the ones after it. The site promises regular shipping, not daily, so don't write "every day" or "daily".
 
 ## Voice and design rules
 
@@ -33,4 +33,4 @@ The day number (Day 001 = 2026-10-20, `START` in `src/lib/site.ts`) is computed 
 - Don't invent facts about Harish (employer, location, history). Ask.
 - Only the masthead is in Kannada (ಹರೀಶ್). Everything else is English.
 - Design is deliberately quiet: one reading column with a left rail for metadata, Newsreader + Geist Mono, one green accent. No cards, gradients, hero sections or scroll animations.
-- Keep pages free of client-side JS beyond the small day-counter script in `Base.astro`.
+- Keep pages free of client-side JS.

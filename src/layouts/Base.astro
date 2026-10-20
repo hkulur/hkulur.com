@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { START, dayLabel } from '../lib/site';
+import { formatDate, getEntries, STARTED } from '../lib/site';
 
 interface Props {
   title?: string;
@@ -19,7 +19,7 @@ const links = [
   { href: '/notes/', label: 'notes' },
   { href: '/about/', label: 'about' },
 ];
-const today = dayLabel(new Date());
+const count = (await getEntries()).length;
 ---
 
 <!doctype html>
@@ -30,7 +30,9 @@ const today = dayLabel(new Date());
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={new URL(path, Astro.site)} />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="alternate" type="application/rss+xml" title="Harish Kulur" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:title" content={pageTitle} />
@@ -60,7 +62,7 @@ const today = dayLabel(new Date());
       <footer class="row">
         <div class="rail mono">hkulur.com</div>
         <div class="main mono">
-          <span data-today>{today}</span>
+          <span>{count} {count === 1 ? 'entry' : 'entries'} since {formatDate(STARTED)}</span>
           <span>
             <a href="https://github.com/hkulur">github</a> ·
             <a href="https://www.linkedin.com/in/harishkulur/">linkedin</a> ·
@@ -70,10 +72,5 @@ const today = dayLabel(new Date());
         </div>
       </footer>
     </div>
-    <script is:inline define:vars={{ START }}>
-      // The build date goes stale between deploys, so recompute today's day number.
-      const n = Math.floor((Date.now() - Date.parse(START)) / 86400000) + 1;
-      document.querySelectorAll('[data-today]').forEach((el) => (el.textContent = 'Day ' + String(n).padStart(3, '0')));
-    </script>
   </body>
 </html>

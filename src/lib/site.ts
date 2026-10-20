@@ -1,19 +1,13 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-export type Entry = CollectionEntry<'log'>;
-export type Kind = Entry['data']['kind'];
+export type Kind = CollectionEntry<'log'>['data']['kind'];
+// Entries are numbered in date order across the whole log: No. 001 is the first thing shipped.
+export type Entry = CollectionEntry<'log'> & { number: number };
 
-// Day 001. Every entry is stamped with its day number counted from here.
-export const START = '2026-10-20';
+export const STARTED = new Date('2026-10-20');
 
-const DAY = 86_400_000;
-
-export function dayNumber(date: Date): number {
-  return Math.floor((date.getTime() - Date.parse(START)) / DAY) + 1;
-}
-
-export function dayLabel(date: Date): string {
-  return `Day ${String(dayNumber(date)).padStart(3, '0')}`;
+export function numberLabel(n: number): string {
+  return `No. ${String(n).padStart(3, '0')}`;
 }
 
 export function formatDate(date: Date): string {
@@ -35,7 +29,12 @@ export const SECTIONS = {
   notes: 'note',
 } as const satisfies Record<string, Kind>;
 
+/** Published entries, newest first. */
 export async function getEntries(kind?: Kind): Promise<Entry[]> {
-  const entries = await getCollection('log', ({ data }) => !data.draft && (!kind || data.kind === kind));
-  return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  const all = await getCollection('log', ({ data }) => !data.draft);
+  all.sort((a, b) => a.data.date.getTime() - b.data.date.getTime() || a.id.localeCompare(b.id));
+  return all
+    .map((entry, i) => ({ ...entry, number: i + 1 }))
+    .filter((entry) => !kind || entry.data.kind === kind)
+    .reverse();
 }
