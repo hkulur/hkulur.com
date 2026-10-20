@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import { START, dayLabel } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  big?: boolean;
+}
+
+const { title, description = 'Harish Kulur. An engineer who builds for the web, shipping something regularly with the help of agents, and writing about anything under the sun.', big = false } = Astro.props;
+const pageTitle = title ? `${title} · Harish Kulur` : 'Harish Kulur';
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'index' },
+  { href: '/writing/', label: 'writing' },
+  { href: '/projects/', label: 'projects' },
+  { href: '/travel/', label: 'travel' },
+  { href: '/notes/', label: 'notes' },
+  { href: '/about/', label: 'about' },
+];
+const today = dayLabel(new Date());
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Harish Kulur" href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(path, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="mast row">
+        <div class="rail mono">
+          <b>Harish Kulur</b>
+          <span>hkulur.com</span>
+        </div>
+        <p class:list={['kn', { small: !big }]} lang="kn"><a href="/" aria-label="Harish Kulur, home">ಹರೀಶ್</a></p>
+        <nav aria-label="Sections">
+          {links.map(({ href, label }) => (
+            <a href={href} aria-current={(href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined}>{label}</a>
+          ))}
+        </nav>
+      </header>
+
+      <slot />
+
+      <footer class="row">
+        <div class="rail mono">hkulur.com</div>
+        <div class="main mono">
+          <span data-today>{today}</span>
+          <span>
+            <a href="https://github.com/hkulur">github</a> ·
+            <a href="https://www.linkedin.com/in/harishkulur/">linkedin</a> ·
+            <a href="https://x.com/hkulur">x</a> ·
+            <a href="/rss.xml">rss</a>
+          </span>
+        </div>
+      </footer>
+    </div>
+    <script is:inline define:vars={{ START }}>
+      // The build date goes stale between deploys, so recompute today's day number.
+      const n = Math.floor((Date.now() - Date.parse(START)) / 86400000) + 1;
+      document.querySelectorAll('[data-today]').forEach((el) => (el.textContent = 'Day ' + String(n).padStart(3, '0')));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Log from '../components/Log.astro';
+import { dayLabel, getEntries } from '../lib/site';
+
+const entries = await getEntries();
+---
+
+<Base big>
+  <section class="section intro row">
+    <div class="rail mono" data-today>{dayLabel(new Date())}</div>
+    <div class="main">
+      <p>I'm an engineer who builds for the web. In this brave new world of agents, I'm making a small effort to ship something regularly, with their help. This site is where I keep the record.</p>
+      <p class="soft">I'll write about code and building, and about whatever else holds my attention: health, nutrition, history, investing, sports, cinema, trips. Anything under the sun, really. New entries go to the top.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-label="The log">
+    <div class="row">
+      <div class="rail mono">The log</div>
+    </div>
+    <Log entries={entries} />
+  </section>
+</Base>

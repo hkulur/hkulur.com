@@ -1,0 +1,31 @@
+---
+import { dayLabel, formatDate, KIND_LABELS, type Entry } from '../lib/site';
+
+interface Props {
+  entries: Entry[];
+}
+
+const { entries } = Astro.props;
+---
+
+{entries.length === 0 ? (
+  <p class="empty">Nothing here yet.</p>
+) : (
+  <ol class="log">
+    {entries.map(({ id, data }) => (
+      <li class="entry row">
+        <div class="rail mono">
+          <b>{dayLabel(data.date)}</b>
+          <time datetime={data.date.toISOString().slice(0, 10)}>{formatDate(data.date)}</time>
+        </div>
+        <div class="main">
+          <h3>
+            <span class="kind">{data.label ?? KIND_LABELS[data.kind]}</span>
+            <a href={`/log/${id}/`}>{data.title}</a>
+          </h3>
+          <p>{data.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+)}

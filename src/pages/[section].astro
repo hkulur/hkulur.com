@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Log from '../components/Log.astro';
+import { getEntries, SECTIONS } from '../lib/site';
+
+export function getStaticPaths() {
+  return Object.entries(SECTIONS).map(([section, kind]) => ({ params: { section }, props: { kind } }));
+}
+
+const { section } = Astro.params;
+const { kind } = Astro.props;
+const entries = await getEntries(kind);
+const title = section.charAt(0).toUpperCase() + section.slice(1);
+---
+
+<Base title={title}>
+  <section class="section">
+    <div class="row">
+      <div class="rail mono">{title}</div>
+    </div>
+    <Log entries={entries} />
+  </section>
+</Base>
