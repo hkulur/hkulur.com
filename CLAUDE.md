@@ -25,6 +25,8 @@ draft: false         # optional
 ---
 ```
 
+The nav is index, writing, projects, about. Only `writing` and `project` entries get a section page (`SECTIONS` in `src/lib/site.ts`); `travel` and `note` entries appear in the index log only.
+
 Entries are numbered No. 001, No. 002, … in date order across the whole log (`getEntries` in `src/lib/site.ts`). The number is computed, so never hard-code it. Backdating an entry renumbers the ones after it. The site promises regular shipping, not daily, so don't write "every day" or "daily".
 
 ## Voice and design rules

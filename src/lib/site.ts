@@ -21,12 +21,10 @@ export const KIND_LABELS: Record<Kind, string> = {
   note: 'Note',
 };
 
-// URL section -> entry kind.
+// URL section -> entry kind. Travel and notes have no section of their own; they appear in the index log only.
 export const SECTIONS = {
   writing: 'writing',
   projects: 'project',
-  travel: 'travel',
-  notes: 'note',
 } as const satisfies Record<string, Kind>;
 
 /** Published entries, newest first. */

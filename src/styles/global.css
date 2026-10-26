@@ -69,6 +69,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 /* Masthead */
 .mast { align-items: end; }
 .mast .rail { padding: 0 0 0.9rem; }
+.mast .rail b { font-family: var(--serif); font-size: 1.375rem; letter-spacing: -0.005em; line-height: 1.2; }
 .kn { font-family: var(--kn); font-weight: 700; line-height: 1; letter-spacing: -0.01em; margin: 0; font-size: clamp(4.5rem, 14vw, 8.5rem); }
 .kn.small { font-size: clamp(2.75rem, 8vw, 3.75rem); }
 .kn a { text-decoration: none; }

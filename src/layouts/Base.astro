@@ -8,15 +8,13 @@ interface Props {
   big?: boolean;
 }
 
-const { title, description = 'Harish Kulur. An engineer who builds for the web, shipping something regularly with the help of agents, and writing about anything under the sun.', big = false } = Astro.props;
+const { title, description = 'Harish Kulur. An engineering lead who still writes code, shipping something regularly with the help of agents, and writing about anything under the sun.', big = false } = Astro.props;
 const pageTitle = title ? `${title} · Harish Kulur` : 'Harish Kulur';
 const path = Astro.url.pathname;
 const links = [
   { href: '/', label: 'index' },
   { href: '/writing/', label: 'writing' },
   { href: '/projects/', label: 'projects' },
-  { href: '/travel/', label: 'travel' },
-  { href: '/notes/', label: 'notes' },
   { href: '/about/', label: 'about' },
 ];
 const count = (await getEntries()).length;
