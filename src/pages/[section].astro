@@ -4,12 +4,12 @@ import Log from '../components/Log.astro';
 import { getEntries, SECTIONS } from '../lib/site';
 
 export function getStaticPaths() {
-  return Object.entries(SECTIONS).map(([section, kind]) => ({ params: { section }, props: { kind } }));
+  return Object.entries(SECTIONS).map(([section, kinds]) => ({ params: { section }, props: { kinds } }));
 }
 
 const { section } = Astro.params;
-const { kind } = Astro.props;
-const entries = await getEntries(kind);
+const { kinds } = Astro.props;
+const entries = await getEntries(kinds);
 const title = section.charAt(0).toUpperCase() + section.slice(1);
 ---
 

@@ -21,18 +21,18 @@ export const KIND_LABELS: Record<Kind, string> = {
   note: 'Note',
 };
 
-// URL section -> entry kind. Travel and notes have no section of their own; they appear in the index log only.
+// URL section -> entry kinds. Writing is everything that isn't a project.
 export const SECTIONS = {
-  writing: 'writing',
-  projects: 'project',
-} as const satisfies Record<string, Kind>;
+  writing: ['writing', 'note', 'travel'],
+  projects: ['project'],
+} as const satisfies Record<string, readonly Kind[]>;
 
 /** Published entries, newest first. */
-export async function getEntries(kind?: Kind): Promise<Entry[]> {
+export async function getEntries(kinds?: readonly Kind[]): Promise<Entry[]> {
   const all = await getCollection('log', ({ data }) => !data.draft);
   all.sort((a, b) => a.data.date.getTime() - b.data.date.getTime() || a.id.localeCompare(b.id));
   return all
     .map((entry, i) => ({ ...entry, number: i + 1 }))
-    .filter((entry) => !kind || entry.data.kind === kind)
+    .filter((entry) => !kinds || kinds.includes(entry.data.kind))
     .reverse();
 }
